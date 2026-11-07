@@ -1,9 +1,0 @@
-# CourseCode,Title,YearGroup,TheoryHours,LabHours,Students,InstructorId,RequiredRoomType
-SENG101,Introduction to Software Engineering,1,3,2,70,INST01,Classroom
-SENG201,Object-Oriented Programming,2,3,2,55,INST02,Classroom
-SENG203,Data Structures,2,3,2,38,INST01,Classroom
-SENG301,Software Architecture,3,3,0,45,INST03,Classroom
-SENG305,Software Testing,3,3,0,40,INST04,Classroom
-SENG401,Software Project Management,4,2,2,30,INST05,Classroom
-SENG102,Discrete Structures,1,three,0,60,INST01,Classroom
-
