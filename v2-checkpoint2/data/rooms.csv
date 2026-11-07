@@ -1,0 +1,6 @@
+# RoomId,RoomType,Capacity,UnavailableSlots
+A101,Classroom,80,NONE
+A102,Classroom,40,NONE
+B201,Laboratory,30,NONE
+B202,Laboratory,50,NONE
+

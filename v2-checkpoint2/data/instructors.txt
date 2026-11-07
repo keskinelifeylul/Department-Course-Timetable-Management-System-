@@ -1,0 +1,7 @@
+# InstructorId|Name|UnavailableSlots(Day:Start-End;...)|PreferredTime(MORNING/AFTERNOON/NONE)
+INST01|Dr. Kaya|NONE|NONE
+INST02|Dr. Demir|Mon:09:00-12:00;Fri:09:00-17:00|NONE
+INST03|Dr. Yildiz|NONE|NONE
+INST04|Dr. Sahin|Fri:09:00-17:00|NONE
+INST05|Dr. Aksoy|NONE|MORNING
+
