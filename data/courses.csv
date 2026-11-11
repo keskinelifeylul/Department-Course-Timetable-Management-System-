@@ -1,0 +1,8 @@
+code,title,year,instructorId,theoryHours,labHours,students
+SENG101,Introduction to Software Engineering,1,I01,3,2,70
+SENG201,Object-Oriented Programming,2,I02,3,2,55
+SENG203,Data Structures,2,I01,3,2,38
+SENG301,Software Architecture,3,I03,3,0,45
+SENG305,Software Testing,3,I04,3,0,40
+SENG401,Software Project Management,4,I05,2,2,30
+SENG102,Discrete Structures,1,I01,three,0,60

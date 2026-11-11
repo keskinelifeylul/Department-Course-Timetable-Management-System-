@@ -1,0 +1,6 @@
+# instructorId | name | unavailable periods | preferred time
+I01 | Dr. Kaya | | NONE
+I02 | Dr. Demir | Mon 09-12 | NONE
+I03 | Dr. Yildiz | | NONE
+I04 | Dr. Sahin | Fri | NONE
+I05 | Dr. Aksoy | | MORNING

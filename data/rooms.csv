@@ -1,0 +1,5 @@
+roomId,type,capacity,unavailable periods
+A101,CLASSROOM,80,
+A102,CLASSROOM,40,Thu 09-11
+B201,LABORATORY,30,
+B202,LABORATORY,50,
