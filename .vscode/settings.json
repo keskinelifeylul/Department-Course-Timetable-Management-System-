@@ -1,9 +1,0 @@
-{
-    "java.project.sourcePaths": [
-        "v1-checkpoint1/src",
-        "v2-checkpoint2/src",
-        "v3-final/src"
-    ],
-    "java.project.outputPath": "bin",
-    "java.configuration.updateBuildConfiguration": "automatic"
-}
