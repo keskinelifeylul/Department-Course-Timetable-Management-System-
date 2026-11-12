@@ -1,0 +1,118 @@
+digraph SchedulingFlowchart {
+    graph [rankdir=TB, splines=ortho, nodesep=0.45, ranksep=0.5, fontname="Helvetica", pad="0.2"];
+    node  [fontname="Helvetica", fontsize=10, style="filled", margin="0.15,0.08"];
+    edge  [fontname="Helvetica", fontsize=9, color="#333333"];
+
+    Start [shape=ellipse, fillcolor="#d5e8d4", color="#3b7a2a", label="Start"];
+    End   [shape=ellipse, fillcolor="#d5e8d4", color="#3b7a2a", label="End"];
+
+    LoadData [shape=parallelogram, fillcolor="#e8f1fb", color="#2f5597",
+              label="(1) Load input data:\ncourses, instructors, rooms, requests"];
+
+    CreateSessions [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+                    label="Create -T / -L sessions;\nclear previous assignments"];
+
+    IdentifyFixed [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+                   label="(2) Identify fixed-time sessions\n(mandatory FIXED_TIME requests)"];
+
+    MoreFixed [shape=diamond, fillcolor="#fcebdd", color="#c55a11",
+               label="Another fixed-time\nsession to process?"];
+
+    CheckFixed [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+                label="(6) Check HC-01..HC-09 only at the\nrequested slot, for each suitable room"];
+
+    ValidFixedRoom [shape=diamond, fillcolor="#fcebdd", color="#c55a11",
+                    label="(7) Valid room\nfound (no conflict)?"];
+
+    RecordFixed [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+                 label="(9) Record assignment\n[OK] ... (fixed by request)"];
+
+    FailFixed [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+               label="(10) Mark unscheduled: CONSTRAINT\n(or NO ROOM) + violated rule;\nsession is not moved"];
+
+    SortRemaining [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+                   label="Sort remaining sessions: more\nstudents first, then longer block;\ntheory before its laboratory"];
+
+    MoreUnscheduled [shape=diamond, fillcolor="#fcebdd", color="#c55a11",
+                     label="(3) Another unscheduled\nsession to process?"];
+
+    HasRoom [shape=diamond, fillcolor="#fcebdd", color="#c55a11",
+             label="Any room with right type\nand capacity >= students?\n(HC-05, HC-06)"];
+
+    MarkNoRoomImmediate [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+                         label="(10) Mark unscheduled:\nNO ROOM (no slot search)"];
+
+    TakeSlot [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+              label="(4) Take next candidate slot\n(preferred slots first; Mon->Fri,\n09:00 -> 17:00 - length)"];
+
+    SlotLeft [shape=diamond, fillcolor="#fcebdd", color="#c55a11",
+              label="Slot left\nto try?"];
+
+    MarkUnscheduledAfterSlots [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+                               label="(10) Mark unscheduled:\nNO ROOM if rooms were the only\nproblem, else CONSTRAINT + reason"];
+
+    TakeRoom [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+              label="(5) Take next suitable room\n(smallest first; requested room only)"];
+
+    RoomLeft [shape=diamond, fillcolor="#fcebdd", color="#c55a11",
+              label="Room left\nto try?"];
+
+    CheckHard [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+               label="(6) checkHard(session, slot, room)\nHC-01 ... HC-09"];
+
+    ConflictFound [shape=diamond, fillcolor="#fcebdd", color="#c55a11",
+                   label="(7) Conflict found?\n(any violation)"];
+
+    TryAlternative [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+                    label="(8) Try alternative:\ncount rejected attempt"];
+
+    RecordAssign [shape=box, fillcolor="#e8f1fb", color="#2f5597",
+                  label="(9) Record assignment;\ncheckSoft() -> add SC warnings"];
+
+    ReportUnscheduled [shape=parallelogram, fillcolor="#e8f1fb", color="#2f5597",
+                       label="(10) Report unscheduled sessions\n(NO ROOM / CONSTRAINT) and warnings"];
+
+    PrintSummary [shape=parallelogram, fillcolor="#e8f1fb", color="#2f5597",
+                  label="(11) Print summary: total, scheduled,\nunscheduled, warnings"];
+
+    // Edges
+    Start -> LoadData;
+    LoadData -> CreateSessions;
+    CreateSessions -> IdentifyFixed;
+    IdentifyFixed -> MoreFixed;
+
+    MoreFixed -> CheckFixed [label="yes"];
+    CheckFixed -> ValidFixedRoom;
+    ValidFixedRoom -> RecordFixed [label="yes"];
+    ValidFixedRoom -> FailFixed [label="no"];
+    RecordFixed -> MoreFixed;
+    FailFixed -> MoreFixed;
+
+    MoreFixed -> SortRemaining [label="no"];
+    SortRemaining -> MoreUnscheduled;
+
+    MoreUnscheduled -> HasRoom [label="yes"];
+    HasRoom -> MarkNoRoomImmediate [label="no"];
+    MarkNoRoomImmediate -> MoreUnscheduled;
+
+    HasRoom -> TakeSlot [label="yes"];
+    TakeSlot -> SlotLeft;
+    SlotLeft -> MarkUnscheduledAfterSlots [label="no"];
+    MarkUnscheduledAfterSlots -> MoreUnscheduled;
+
+    SlotLeft -> TakeRoom [label="yes"];
+    TakeRoom -> RoomLeft;
+    RoomLeft -> TakeSlot [label="no: next slot"];
+    RoomLeft -> CheckHard [label="yes"];
+
+    CheckHard -> ConflictFound;
+    ConflictFound -> TryAlternative [label="yes"];
+    TryAlternative -> TakeRoom;
+
+    ConflictFound -> RecordAssign [label="no"];
+    RecordAssign -> MoreUnscheduled;
+
+    MoreUnscheduled -> ReportUnscheduled [label="no"];
+    ReportUnscheduled -> PrintSummary;
+    PrintSummary -> End;
+}

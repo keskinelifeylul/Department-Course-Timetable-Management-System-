@@ -1,0 +1,202 @@
+digraph ClassDiagram {
+    graph [rankdir=TB, splines=true, nodesep=0.45, ranksep=0.65, fontname="Helvetica", pad="0.2"];
+    node  [shape=plaintext, fontname="Helvetica", fontsize=10];
+    edge  [fontname="Helvetica", fontsize=9, color="#333333"];
+
+    Main [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>Main</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#f5f8fc" ALIGN="LEFT"> </TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ main(args: String[]): void</TD></TR>
+        </TABLE>
+    >];
+
+    ConsoleMenu [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>ConsoleMenu</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#e9f0f8" ALIGN="LEFT">- scanner: Scanner<BR ALIGN="LEFT"/>- dataDir: String<BR ALIGN="LEFT"/>- loader: DataLoader<BR ALIGN="LEFT"/>- timetable: Timetable<BR ALIGN="LEFT"/>- scheduler: Scheduler<BR ALIGN="LEFT"/>- reports: ReportGenerator<BR ALIGN="LEFT"/>- dataLoaded: boolean<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ ConsoleMenu(dataDir: String)<BR ALIGN="LEFT"/>+ run(): void<BR ALIGN="LEFT"/>- printMenu(): void<BR ALIGN="LEFT"/>- loadData(): void<BR ALIGN="LEFT"/>- generateTimetable(): void<BR ALIGN="LEFT"/>- viewYearTimetable(): void<BR ALIGN="LEFT"/>- viewAllSessions(): void<BR ALIGN="LEFT"/>- viewUnscheduled(): void<BR ALIGN="LEFT"/>- modifyAssignment(): void<BR ALIGN="LEFT"/>- classroomRequest(): void<BR ALIGN="LEFT"/>- saveToFile(): void<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    DataLoader [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>DataLoader</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#e9f0f8" ALIGN="LEFT">- instructors: HashMap&lt;String, Instructor&gt;<BR ALIGN="LEFT"/>- courses: HashMap&lt;String, Course&gt;<BR ALIGN="LEFT"/>- rooms: HashMap&lt;String, Room&gt;<BR ALIGN="LEFT"/>- requests: ArrayList&lt;SpecialRequest&gt;<BR ALIGN="LEFT"/>- warnings: ArrayList&lt;String&gt;<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ loadAll(dataDir: String): boolean<BR ALIGN="LEFT"/>- loadInstructors(path: String): void<BR ALIGN="LEFT"/>- loadCourses(path: String): void<BR ALIGN="LEFT"/>- loadRooms(path: String): void<BR ALIGN="LEFT"/>- loadRequests(path: String): void<BR ALIGN="LEFT"/>- parseSlots(text: String): ArrayList&lt;TimeSlot&gt;<BR ALIGN="LEFT"/>+ getInstructors() / getCourses() / getRooms()<BR ALIGN="LEFT"/>+ getRequests() / getWarnings()<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    Scheduler [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#833c0c">
+            <TR><TD BGCOLOR="#c55a11" ALIGN="CENTER"><FONT COLOR="white"><B>Scheduler</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#fdf5ef" ALIGN="LEFT">- timetable: Timetable<BR ALIGN="LEFT"/>- checker: ConstraintChecker<BR ALIGN="LEFT"/>- rooms: ArrayList&lt;Room&gt;<BR ALIGN="LEFT"/>- requests: ArrayList&lt;SpecialRequest&gt;<BR ALIGN="LEFT"/>- log: ArrayList&lt;String&gt;<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ generateTimetable(): void<BR ALIGN="LEFT"/>- scheduleFixedSessions(): void<BR ALIGN="LEFT"/>- sortSessions(): ArrayList&lt;Session&gt;<BR ALIGN="LEFT"/>- scheduleSession(s: Session): boolean<BR ALIGN="LEFT"/>- findRoom(s: Session, slot: TimeSlot): Room<BR ALIGN="LEFT"/>+ hasSuitableRoom(s: Session): boolean<BR ALIGN="LEFT"/>+ getLog(): ArrayList&lt;String&gt;<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    ConstraintChecker [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#833c0c">
+            <TR><TD BGCOLOR="#c55a11" ALIGN="CENTER"><FONT COLOR="white"><B>ConstraintChecker</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#fdf5ef" ALIGN="LEFT">- timetable: Timetable<BR ALIGN="LEFT"/>- requests: ArrayList&lt;SpecialRequest&gt;<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ checkHard(s: Session, slot: TimeSlot, r: Room): ArrayList&lt;String&gt;<BR ALIGN="LEFT"/>+ checkSoft(s: Session, slot: TimeSlot): ArrayList&lt;String&gt;<BR ALIGN="LEFT"/>- checkInstructorConflict(..): String   HC-01<BR ALIGN="LEFT"/>- checkRoomConflict(..): String   HC-02<BR ALIGN="LEFT"/>- checkYearGroupConflict(..): String   HC-03<BR ALIGN="LEFT"/>- checkWorkingHours(..): String   HC-04<BR ALIGN="LEFT"/>- checkRoomCapacity(..): String   HC-05<BR ALIGN="LEFT"/>- checkRoomType(..): String   HC-06<BR ALIGN="LEFT"/>- checkInstructorAvailability(..): String   HC-07<BR ALIGN="LEFT"/>- checkFixedTime(..): String   HC-08<BR ALIGN="LEFT"/>- checkRoomAvailability(..): String   HC-09<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    ReportGenerator [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>ReportGenerator</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#e9f0f8" ALIGN="LEFT">- timetable: Timetable<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ printYearTimetable(year: int): void<BR ALIGN="LEFT"/>+ printAllSessions(): void<BR ALIGN="LEFT"/>+ printUnscheduled(): void<BR ALIGN="LEFT"/>+ createEmailDraft(s: Session, slot: TimeSlot): String<BR ALIGN="LEFT"/>+ saveTimetable(path: String): boolean<BR ALIGN="LEFT"/>+ saveText(path: String, text: String): boolean<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    Timetable [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>Timetable</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#e9f0f8" ALIGN="LEFT">- sessions: ArrayList&lt;Session&gt;<BR ALIGN="LEFT"/>- warnings: ArrayList&lt;String&gt;<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ addSession(s: Session): void<BR ALIGN="LEFT"/>+ getScheduled(): ArrayList&lt;Session&gt;<BR ALIGN="LEFT"/>+ getUnscheduled(): ArrayList&lt;Session&gt;<BR ALIGN="LEFT"/>+ getByYear(year: int): ArrayList&lt;Session&gt;<BR ALIGN="LEFT"/>+ findSession(name: String): Session<BR ALIGN="LEFT"/>+ addWarning(w: String): void<BR ALIGN="LEFT"/>+ clearAssignments(): void<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    Course [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>Course</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#e9f0f8" ALIGN="LEFT">- code: String<BR ALIGN="LEFT"/>- title: String<BR ALIGN="LEFT"/>- year: int<BR ALIGN="LEFT"/>- instructor: Instructor<BR ALIGN="LEFT"/>- theoryHours: int<BR ALIGN="LEFT"/>- labHours: int<BR ALIGN="LEFT"/>- students: int<BR ALIGN="LEFT"/>- sessions: ArrayList&lt;Session&gt;<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ createSessions(): ArrayList&lt;Session&gt;<BR ALIGN="LEFT"/>+ getTotalHours(): int<BR ALIGN="LEFT"/>+ getCode() / getYear() / getStudents() ...<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    Instructor [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>Instructor</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#e9f0f8" ALIGN="LEFT">- instructorId: String<BR ALIGN="LEFT"/>- name: String<BR ALIGN="LEFT"/>- unavailableSlots: ArrayList&lt;TimeSlot&gt;<BR ALIGN="LEFT"/>- preferredTime: String<BR ALIGN="LEFT"/>- courses: ArrayList&lt;Course&gt;<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ isAvailable(slot: TimeSlot): boolean<BR ALIGN="LEFT"/>+ prefers(slot: TimeSlot): boolean<BR ALIGN="LEFT"/>+ addUnavailableSlot(slot: TimeSlot): void<BR ALIGN="LEFT"/>+ addCourse(course: Course): void<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    Room [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>Room</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#e9f0f8" ALIGN="LEFT">- roomId: String<BR ALIGN="LEFT"/>- type: RoomType<BR ALIGN="LEFT"/>- capacity: int<BR ALIGN="LEFT"/>- unavailableSlots: ArrayList&lt;TimeSlot&gt;<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ isSuitableFor(session: Session): boolean<BR ALIGN="LEFT"/>+ isAvailable(slot: TimeSlot): boolean<BR ALIGN="LEFT"/>+ addUnavailableSlot(slot: TimeSlot): void<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    SpecialRequest [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>SpecialRequest</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#e9f0f8" ALIGN="LEFT">- type: RequestType<BR ALIGN="LEFT"/>- courseCode: String<BR ALIGN="LEFT"/>- sessionType: SessionType<BR ALIGN="LEFT"/>- slot: TimeSlot<BR ALIGN="LEFT"/>- roomId: String<BR ALIGN="LEFT"/>- mandatory: boolean<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ appliesTo(session: Session): boolean<BR ALIGN="LEFT"/>+ isMandatory(): boolean<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    Session [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>Session</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#e9f0f8" ALIGN="LEFT">- course: Course<BR ALIGN="LEFT"/>- type: SessionType<BR ALIGN="LEFT"/>- hours: int<BR ALIGN="LEFT"/>- slot: TimeSlot<BR ALIGN="LEFT"/>- room: Room<BR ALIGN="LEFT"/>- problemType: ProblemType<BR ALIGN="LEFT"/>- problemReason: String<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ getName(): String<BR ALIGN="LEFT"/>+ getRequiredRoomType(): RoomType<BR ALIGN="LEFT"/>+ assign(slot: TimeSlot, room: Room): void<BR ALIGN="LEFT"/>+ unassign(): void<BR ALIGN="LEFT"/>+ markUnscheduled(p: ProblemType, reason: String): void<BR ALIGN="LEFT"/>+ isScheduled(): boolean<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    TimeSlot [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#1f4e79">
+            <TR><TD BGCOLOR="#2f5597" ALIGN="CENTER"><FONT COLOR="white"><B>TimeSlot</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#e9f0f8" ALIGN="LEFT">- day: int<BR ALIGN="LEFT"/>- startHour: int<BR ALIGN="LEFT"/>- length: int<BR ALIGN="LEFT"/>+ DAY_NAMES: String[] {static}<BR ALIGN="LEFT"/>+ FIRST_HOUR: int = 9 {static}<BR ALIGN="LEFT"/>+ LAST_HOUR: int = 17 {static}<BR ALIGN="LEFT"/></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#ffffff" ALIGN="LEFT">+ getEndHour(): int<BR ALIGN="LEFT"/>+ overlaps(other: TimeSlot): boolean<BR ALIGN="LEFT"/>+ isWithinWorkingHours(): boolean<BR ALIGN="LEFT"/>+ toString(): String<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    RoomType [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#404040">
+            <TR><TD BGCOLOR="#7f7f7f" ALIGN="CENTER"><FONT COLOR="white">&laquo;enumeration&raquo;<BR/><B>RoomType</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#f2f2f2" ALIGN="LEFT">CLASSROOM<BR ALIGN="LEFT"/>LABORATORY<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    SessionType [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#404040">
+            <TR><TD BGCOLOR="#7f7f7f" ALIGN="CENTER"><FONT COLOR="white">&laquo;enumeration&raquo;<BR/><B>SessionType</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#f2f2f2" ALIGN="LEFT">THEORY<BR ALIGN="LEFT"/>LAB<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    RequestType [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#404040">
+            <TR><TD BGCOLOR="#7f7f7f" ALIGN="CENTER"><FONT COLOR="white">&laquo;enumeration&raquo;<BR/><B>RequestType</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#f2f2f2" ALIGN="LEFT">FIXED_TIME<BR ALIGN="LEFT"/>SPECIFIC_ROOM<BR ALIGN="LEFT"/>UNAVAILABLE_DAY<BR ALIGN="LEFT"/>LAB_BEFORE_THEORY<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    ProblemType [label=<
+        <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="4" COLOR="#404040">
+            <TR><TD BGCOLOR="#7f7f7f" ALIGN="CENTER"><FONT COLOR="white">&laquo;enumeration&raquo;<BR/><B>ProblemType</B></FONT></TD></TR>
+            <HR/>
+            <TR><TD BGCOLOR="#f2f2f2" ALIGN="LEFT">NO_ROOM<BR ALIGN="LEFT"/>CONSTRAINT<BR ALIGN="LEFT"/></TD></TR>
+        </TABLE>
+    >];
+
+    // Relationships
+    Main -> ConsoleMenu [style=dashed, arrowhead=vee, label="creates"];
+    ConsoleMenu -> DataLoader [dir=both, arrowtail=diamond, arrowhead=vee, taillabel="1", headlabel="1"];
+    ConsoleMenu -> Scheduler [dir=both, arrowtail=odiamond, arrowhead=vee, taillabel="1", headlabel="0..1"];
+    ConsoleMenu -> ReportGenerator [dir=both, arrowtail=diamond, arrowhead=vee, taillabel="1", headlabel="1"];
+    ConsoleMenu -> Timetable [dir=both, arrowtail=diamond, arrowhead=vee, taillabel="1", headlabel="1"];
+
+    DataLoader -> Course [arrowhead=vee, taillabel="1", headlabel="*", label="loads"];
+    DataLoader -> Instructor [arrowhead=vee, taillabel="1", headlabel="*", label="loads"];
+    DataLoader -> Room [arrowhead=vee, taillabel="1", headlabel="*", label="loads"];
+    DataLoader -> SpecialRequest [arrowhead=vee, taillabel="1", headlabel="*", label="loads"];
+
+    Scheduler -> ConstraintChecker [arrowhead=vee, taillabel="1", headlabel="1", label="uses"];
+    Scheduler -> Timetable [arrowhead=vee, taillabel="1", headlabel="1", label="fills"];
+    Scheduler -> Room [arrowhead=vee, taillabel="*", headlabel="*"];
+    Scheduler -> SpecialRequest [arrowhead=vee, taillabel="*", headlabel="*"];
+
+    ConstraintChecker -> Timetable [arrowhead=vee, taillabel="1", headlabel="1"];
+    ConstraintChecker -> SpecialRequest [arrowhead=vee, taillabel="*", headlabel="*"];
+
+    ReportGenerator -> Timetable [arrowhead=vee, taillabel="1", headlabel="1", label="prints"];
+
+    Timetable -> Session [dir=both, arrowtail=odiamond, arrowhead=vee, taillabel="1", headlabel="*"];
+
+    Course -> Session [dir=both, arrowtail=diamond, arrowhead=vee, taillabel="1", headlabel="1..2"];
+    Course -> Instructor [arrowhead=vee, taillabel="*", headlabel="1"];
+
+    Instructor -> TimeSlot [dir=both, arrowtail=diamond, arrowhead=vee, taillabel="1", headlabel="*", label="unavailable"];
+    Room -> TimeSlot [dir=both, arrowtail=diamond, arrowhead=vee, taillabel="1", headlabel="*", label="unavailable"];
+
+    SpecialRequest -> TimeSlot [arrowhead=vee, taillabel="*", headlabel="0..1"];
+
+    Session -> Room [arrowhead=vee, taillabel="*", headlabel="0..1", label="placed in"];
+    Session -> TimeSlot [arrowhead=vee, taillabel="*", headlabel="0..1"];
+}
