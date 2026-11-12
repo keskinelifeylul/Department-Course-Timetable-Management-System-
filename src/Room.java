@@ -47,7 +47,7 @@ public class Room {
     }
 
     public void addUnavailableSlot(TimeSlot slot) {
-        if (slot != null) {
+        if (slot != null && !unavailableSlots.contains(slot)) {
             unavailableSlots.add(slot);
         }
     }

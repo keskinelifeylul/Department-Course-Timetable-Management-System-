@@ -554,13 +554,18 @@ public class DataLoader {
         return result;
     }
 
+    private static final String[] FULL_DAY_NAMES = {
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
+    };
+
     private int parseDay(String token) {
         if (token == null) {
             return -1;
         }
         String t = token.trim();
         for (int i = 0; i < TimeSlot.DAY_NAMES.length; i++) {
-            if (TimeSlot.DAY_NAMES[i].equalsIgnoreCase(t)) {
+            if (TimeSlot.DAY_NAMES[i].equalsIgnoreCase(t)
+                    || FULL_DAY_NAMES[i].equalsIgnoreCase(t)) {
                 return i;
             }
         }

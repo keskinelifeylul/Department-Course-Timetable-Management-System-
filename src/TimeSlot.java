@@ -60,6 +60,11 @@ public class TimeSlot {
     }
 
     @Override
+    public int hashCode() {
+        return 31 * (31 * day + startHour) + length;
+    }
+
+    @Override
     public String toString() {
         String dayName = (day >= 0 && day < DAY_NAMES.length) ? DAY_NAMES[day] : "Day" + day;
         return String.format("%s %02d:00-%02d:00", dayName, startHour, getEndHour());
