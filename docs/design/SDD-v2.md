@@ -151,15 +151,15 @@ generateTimetable():
 
 | ID | Constraint | Checked in (`Class.method`) | Code version |
 | :--- | :--- | :--- | :--- |
-| **HC-01** | Instructor conflict | `ConstraintChecker.checkInstructorConflict()` | Planned for v3 |
-| **HC-02** | Room conflict | `ConstraintChecker.checkRoomConflict()` | Planned for v3 |
-| **HC-03** | Year-group conflict | `ConstraintChecker.checkYearGroupConflict()` | Planned for v3 |
-| **HC-04** | Working hours | `ConstraintChecker.checkWorkingHours()` → `TimeSlot.isWithinWorkingHours()` | Helper `TimeSlot.isWithinWorkingHours()` in `code-v1`; check planned for v3 |
-| **HC-05** | Room capacity | `ConstraintChecker.checkRoomCapacity()` → `Room.isSuitableFor()` | Planned for v3 |
-| **HC-06** | Room type | `ConstraintChecker.checkRoomType()` → `Room.isSuitableFor()` | Planned for v3 |
-| **HC-07** | Instructor availability | `ConstraintChecker.checkInstructorAvailability()` → `Instructor.isAvailable()` | Helper `Instructor.isAvailable()` in `code-v1`; check planned for v5 |
-| **HC-08** | Fixed-time requirements | `ConstraintChecker.checkFixedTime()`, `Scheduler.scheduleFixedSessions()` | Planned for v5 |
-| **HC-09** | Room availability | `ConstraintChecker.checkRoomAvailability()` → `Room.isAvailable()` | Helper `Room.isAvailable()` in `code-v1`; check planned for v5 |
+| **HC-01** | Instructor conflict | `ConstraintChecker.checkInstructorConflict()` | Implemented in v3 (V2) |
+| **HC-02** | Room conflict | `ConstraintChecker.checkRoomConflict()` | Implemented in v3 (V2) |
+| **HC-03** | Year-group conflict | `ConstraintChecker.checkYearGroupConflict()` | Implemented in v3 (V2) |
+| **HC-04** | Working hours | `ConstraintChecker.checkWorkingHours()` → `TimeSlot.isWithinWorkingHours()` | Helper in `code-v1`; check implemented in v3 (V2) |
+| **HC-05** | Room capacity | `ConstraintChecker.checkRoomCapacity()` → `Room.isSuitableFor()` | Implemented in v3 (V2) |
+| **HC-06** | Room type | `ConstraintChecker.checkRoomType()` → `Room.isSuitableFor()` | Implemented in v3 (V2) |
+| **HC-07** | Instructor availability | `ConstraintChecker.checkInstructorAvailability()` → `Instructor.isAvailable()` | Helper `Instructor.isAvailable()` in `code-v1`; check planned for v5 (V3) |
+| **HC-08** | Fixed-time requirements | `ConstraintChecker.checkFixedTime()`, `Scheduler.scheduleFixedSessions()` | Planned for v5 (V3) |
+| **HC-09** | Room availability | `ConstraintChecker.checkRoomAvailability()` → `Room.isAvailable()` | Helper `Room.isAvailable()` in `code-v1`; check planned for v5 (V3) |
 
 ### 6.5 Known Limitations
 
@@ -204,46 +204,46 @@ generateTimetable():
 
 | Requirement | Implemented in (`Class.method`) | Test case(s) | Status (planned / implemented / tested) |
 | :--- | :--- | :--- | :--- |
-| **FR-01** | `DataLoader.loadCourses()` | `TC-15`, `TC-12` | planned (v2) |
-| **FR-02** | `DataLoader.loadCourses()`, `loadInstructors()`, `loadRooms()`, `loadRequests()` | `TC-12` | planned (v2) |
-| **FR-03** | `DataLoader.loadInstructors()` | `TC-15` | planned (v2) |
-| **FR-04** | `Scheduler.generateTimetable()`, `scheduleSession()` | `TC-01`, `TC-14` | planned (v3/v4) |
-| **FR-05** | `ConstraintChecker.checkHard()` | `TC-02` – `TC-07` | planned (v3) |
-| **FR-06** | `ReportGenerator.printYearTimetable()` | `TC-21` | planned (v4) |
+| **FR-01** | `DataLoader.loadCourses()` | `TC-15`, `TC-12` | implemented (v2) |
+| **FR-02** | `DataLoader.loadCourses()`, `loadInstructors()`, `loadRooms()`, `loadRequests()` | `TC-12` | implemented (v2) |
+| **FR-03** | `DataLoader.loadInstructors()` | `TC-15` | implemented (v2) |
+| **FR-04** | `Scheduler.generateTimetable()`, `scheduleSession()` | `TC-01`, `TC-14` | implemented (v3/v4) |
+| **FR-05** | `ConstraintChecker.checkHard()` | `TC-02` – `TC-07` | implemented (v3) |
+| **FR-06** | `ReportGenerator.printYearTimetable()` | `TC-21` | implemented (v4) |
 | **FR-07** | `ReportGenerator.createEmailDraft()` | `TC-11` | planned (v6) |
 | **FR-08** | `ReportGenerator.saveTimetable()` | `TC-21` | planned (v6) |
-| **FR-09** | `DataLoader.loadRooms()` | `TC-15` | planned (v2) |
-| **FR-10** | `DataLoader.loadRequests()` | `TC-15` | planned (v2) |
-| **FR-11** | `DataLoader.loadAll()` | `TC-16` | planned (v2) |
-| **FR-12** | `DataLoader.loadCourses()`, `loadRequests()` | `TC-12` | planned (v2) |
-| **FR-13** | `Course.createSessions()` | `TC-01` | planned (v2) |
+| **FR-09** | `DataLoader.loadRooms()` | `TC-15` | implemented (v2) |
+| **FR-10** | `DataLoader.loadRequests()` | `TC-15` | implemented (v2) |
+| **FR-11** | `DataLoader.loadAll()` | `TC-16` | implemented (v2) |
+| **FR-12** | `DataLoader.loadCourses()`, `loadRequests()` | `TC-12` | implemented (v2) |
+| **FR-13** | `Course.createSessions()` | `TC-01` | implemented (v2) |
 | **FR-14** | `Scheduler.scheduleFixedSessions()` | `TC-07` | planned (v5) |
-| **FR-15** | `Scheduler.scheduleSession()`, `findRoom()` | `TC-09`, `TC-20` | planned (v3) |
-| **FR-16** | `Session.markUnscheduled()`, `Scheduler.hasSuitableRoom()` | `TC-10`, `TC-05` | planned (v3) |
+| **FR-15** | `Scheduler.scheduleSession()`, `findRoom()` | `TC-09`, `TC-20` | implemented (v3) |
+| **FR-16** | `Session.markUnscheduled()`, `Scheduler.hasSuitableRoom()` | `TC-10`, `TC-05` | implemented (v3) |
 | **FR-17** | `ConstraintChecker.checkSoft()` | `TC-08`, `TC-14` | planned (v5) |
-| **FR-18** | `Scheduler.getLog()`, `ConsoleMenu.generateTimetable()` | `TC-01` | planned (v4) |
-| **FR-19** | `ReportGenerator.printAllSessions()` | `TC-21` | planned (v4) |
-| **FR-20** | `ReportGenerator.printUnscheduled()` | `TC-10` | planned (v4) |
+| **FR-18** | `Scheduler.getLog()`, `ConsoleMenu.generateTimetable()` | `TC-01` | implemented (v4) |
+| **FR-19** | `ReportGenerator.printAllSessions()` | `TC-21` | implemented (v4) |
+| **FR-20** | `ReportGenerator.printUnscheduled()` | `TC-10` | implemented (v4) |
 | **FR-21** | `ConsoleMenu.modifyAssignment()`, `ConstraintChecker.checkHard()` | `TC-13` | planned (v5) |
 | **FR-22** | `ConsoleMenu.modifyAssignment()`, `ConstraintChecker.checkSoft()` | `TC-13` | planned (v5) |
 | **FR-23** | `ConsoleMenu.modifyAssignment()`, `Session.markUnscheduled()` | `TC-13` | planned (v5) |
 | **FR-24** | `ReportGenerator.saveText()` | `TC-11` | planned (v6) |
-| **FR-25** | `Timetable.clearAssignments()`, `Scheduler.generateTimetable()` | `TC-22` | planned (v4) |
+| **FR-25** | `Timetable.clearAssignments()`, `Scheduler.generateTimetable()` | `TC-22` | implemented (v4) |
 | **FR-26** | `ConsoleMenu.classroomRequest()` | `TC-11` | planned (v6) |
-| **HC-01** | `ConstraintChecker.checkInstructorConflict()` | `TC-02` | planned (v3) |
-| **HC-02** | `ConstraintChecker.checkRoomConflict()` | `TC-03` | planned (v3) |
-| **HC-03** | `ConstraintChecker.checkYearGroupConflict()` | `TC-04` | planned (v3) |
-| **HC-04** | `ConstraintChecker.checkWorkingHours()`, `TimeSlot.isWithinWorkingHours()` | `TC-17` | helper implemented (v1); check planned (v3) |
-| **HC-05** | `ConstraintChecker.checkRoomCapacity()`, `Room.isSuitableFor()` | `TC-05` | planned (v3) |
-| **HC-06** | `ConstraintChecker.checkRoomType()`, `Room.isSuitableFor()` | `TC-18` | planned (v3) |
+| **HC-01** | `ConstraintChecker.checkInstructorConflict()` | `TC-02` | implemented (v3) |
+| **HC-02** | `ConstraintChecker.checkRoomConflict()` | `TC-03` | implemented (v3) |
+| **HC-03** | `ConstraintChecker.checkYearGroupConflict()` | `TC-04` | implemented (v3) |
+| **HC-04** | `ConstraintChecker.checkWorkingHours()`, `TimeSlot.isWithinWorkingHours()` | `TC-17` | implemented (v1/v3) |
+| **HC-05** | `ConstraintChecker.checkRoomCapacity()`, `Room.isSuitableFor()` | `TC-05` | implemented (v3) |
+| **HC-06** | `ConstraintChecker.checkRoomType()`, `Room.isSuitableFor()` | `TC-18` | implemented (v3) |
 | **HC-07** | `ConstraintChecker.checkInstructorAvailability()`, `Instructor.isAvailable()` | `TC-06` | helper implemented (v1); check planned (v5) |
 | **HC-08** | `ConstraintChecker.checkFixedTime()`, `Scheduler.scheduleFixedSessions()` | `TC-07` | planned (v5) |
 | **HC-09** | `ConstraintChecker.checkRoomAvailability()`, `Room.isAvailable()` | `TC-19` | helper implemented (v1); check planned (v5) |
-| **NFR-01** | `DataLoader` (`try-catch` per line), `ConsoleMenu.run()` | `TC-12`, `TC-16` | planned (v2) |
+| **NFR-01** | `DataLoader` (`try-catch` per line), `ConsoleMenu.run()` | `TC-12`, `TC-16` | implemented (v2) |
 | **NFR-02** | `ConsoleMenu.run()` | `TC-23` | implemented (v1) |
-| **NFR-03** | `Scheduler.generateTimetable()` | `TC-25` | planned (v4) |
+| **NFR-03** | `Scheduler.generateTimetable()` | `TC-25` | implemented (v4) |
 | **NFR-04** | whole project (standard library only) | `TC-24` | implemented (v1) |
-| **NFR-05** | `ConstraintChecker` messages, `DataLoader` warnings | `TC-02`, `TC-12` | planned (v2/v3) |
+| **NFR-05** | `ConstraintChecker` messages, `DataLoader` warnings | `TC-02`, `TC-12` | implemented (v2/v3) |
 
 ---
 

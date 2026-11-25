@@ -30,8 +30,11 @@ public class Room {
     }
 
     public boolean isSuitableFor(Session session) {
-        // TODO: planned for V2 (Code v3)
-        return false;
+        if (session == null) {
+            return false;
+        }
+        return this.type == session.getRequiredRoomType()
+                && this.capacity >= session.getCourse().getStudents();
     }
 
     public boolean isAvailable(TimeSlot slot) {

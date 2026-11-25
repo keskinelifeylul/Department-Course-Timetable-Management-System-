@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ConsoleMenu {
@@ -153,19 +154,92 @@ public class ConsoleMenu {
     }
 
     private void generateTimetable() {
-        System.out.println("Generate timetable automatically: not implemented yet (planned for V2).");
+        if (!dataLoaded) {
+            System.out.println("Please load valid input data first (option 1). Courses and rooms are required.");
+            return;
+        }
+        System.out.println();
+        System.out.println("=== AUTOMATIC TIMETABLE GENERATION ===");
+        ConstraintChecker checker = new ConstraintChecker(timetable, loader.getRequests());
+        ArrayList<Room> roomList = new ArrayList<>(loader.getRooms().values());
+        scheduler = new Scheduler(timetable, checker, roomList, loader.getRequests());
+        scheduler.generateTimetable();
+
+        for (String line : scheduler.getLog()) {
+            System.out.println("  " + line);
+        }
+
+        int total = timetable.getSessions().size();
+        int scheduledCount = timetable.getScheduled().size();
+        int unscheduledCount = timetable.getUnscheduled().size();
+        int warningCount = timetable.getWarnings().size();
+
+        System.out.println("--------------------------------------------------");
+        System.out.println("SUMMARY: Total sessions: " + total
+                + " | Scheduled: " + scheduledCount
+                + " | Unscheduled: " + unscheduledCount
+                + " | Warnings: " + warningCount);
+        System.out.println("--------------------------------------------------");
+        waitForEnter();
     }
 
     private void viewYearTimetable() {
-        System.out.println("View timetable by year group: not implemented yet (planned for V2).");
+        if (!ensureTimetableReady()) {
+            return;
+        }
+        System.out.print("Enter year group (1-4): ");
+        if (!scanner.hasNextLine()) {
+            return;
+        }
+        String input = scanner.nextLine().trim();
+        int year;
+        try {
+            year = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid year group \"" + input + "\". Please enter a number from 1 to 4.");
+            return;
+        }
+        if (year < 1 || year > 4) {
+            System.out.println("Invalid year group \"" + input + "\". Please enter a number from 1 to 4.");
+            return;
+        }
+        reports.printYearTimetable(year);
+        waitForEnter();
     }
 
     private void viewAllSessions() {
-        System.out.println("View all scheduled sessions: not implemented yet (planned for V2).");
+        if (!ensureTimetableReady()) {
+            return;
+        }
+        reports.printAllSessions();
+        waitForEnter();
     }
 
     private void viewUnscheduled() {
-        System.out.println("View unscheduled sessions and warnings: not implemented yet (planned for V2).");
+        if (!ensureTimetableReady()) {
+            return;
+        }
+        reports.printUnscheduled();
+        waitForEnter();
+    }
+
+    private boolean ensureTimetableReady() {
+        if (!dataLoaded) {
+            System.out.println("Please load input data first (option 1).");
+            return false;
+        }
+        if (scheduler == null) {
+            System.out.println("Please generate the timetable first (option 2).");
+            return false;
+        }
+        return true;
+    }
+
+    private void waitForEnter() {
+        System.out.print("Press Enter to return to the main menu...");
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
     }
 
     private void modifyAssignment() {
